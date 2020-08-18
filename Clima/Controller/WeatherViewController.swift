@@ -15,7 +15,9 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
     
-    let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
+    var weatherManager = WeatherManager()
+    
+    let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=spokane&units=imperial"
     let APP_ID = "2bf33d2dfb6952c98b04d5aeb947b505"
     
     override func viewDidLoad() {
@@ -37,6 +39,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        
         if textField.text != "" {
             return true
         } else {
@@ -48,7 +51,9 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         // use searchField.text to get the weather for city
-        
+        if let city = searchTextField.text {
+            weatherManager.fetchWeather(cityName: city)
+        }
         searchTextField.text = ""
     }
     
